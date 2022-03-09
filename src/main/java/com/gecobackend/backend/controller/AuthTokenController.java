@@ -1,15 +1,12 @@
 package com.gecobackend.backend.controller;
 
 import javax.servlet.http.HttpServletRequest;
-
-import com.gecobackend.backend.model.Authtoken;
 import com.gecobackend.backend.service.AuthTokenService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
