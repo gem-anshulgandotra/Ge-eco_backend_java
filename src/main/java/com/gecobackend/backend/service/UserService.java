@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.gecobackend.backend.entity.JwtHelper;
 import com.gecobackend.backend.entity.Response;
 import com.gecobackend.backend.exceptions.CompulsaryFieldException;
 import com.gecobackend.backend.model.Company;
@@ -18,14 +21,20 @@ import org.apache.commons.codec.digest.DigestUtils;
 @Service
 public class UserService {
     
-@Autowired
-private UserRepository userRepository;
+   @Autowired
+   private UserRepository userRepository;
 
-@Autowired
-private CompanyRepository companyRepository;
+   @Autowired
+   private CompanyRepository companyRepository;
+
+   @Autowired
+   private JwtHelper jwtHelper;
+
+   @Autowired
+   private AuthTokenService authTokenService;
 
 
-    public ResponseEntity<?> createUser(User userDetails){
+    public ResponseEntity<?> createUser(User userDetails,HttpServletRequest request){
         userDetails.setUsername(userDetails.getUsername().toLowerCase());
         Response resp=new Response();
        
@@ -53,6 +62,7 @@ private CompanyRepository companyRepository;
         newCompany.setInsertTime(new Date());
         newCompany.setCompanyType("User");
         companyRepository.save(newCompany);
+        
     }
 
         userDetails.setInsertTime(new Date());
@@ -61,8 +71,11 @@ private CompanyRepository companyRepository;
         userRepository.save(userDetails);
         resp.setOperation("success");
         resp.setMessage("User created successfully");
+        String token=authTokenService.postBridgeToken(userDetails.getUsername());
+Map<String,String> data=new HashMap<String,String>();
+data.put("token",token);
         // resp.setData(userDetails);
-        resp.setData(null);
+        resp.setData(data);
         return ResponseEntity.status(HttpStatus.CREATED).body(resp);
 
         
@@ -121,9 +134,41 @@ resp.setOperation("Success");
     return ResponseEntity.status(HttpStatus.OK).body(resp);
     }
 
+  
+
+    public ResponseEntity<?> loginUser(User credentials) {
+        Response resp=new Response();
+     String pass=EncryptePassword(credentials.getPassword());
+     String username=credentials.getUsername();
+
+     if(userRepository.findByUsernameAndPassword(username, pass)!=null){
+        resp.setOperation("Success");
+        resp.setMessage("Login Success");
+        Map<String,String> data=new HashMap<String,String>();
+        data.put("token",jwtHelper.generateToken(username,pass));
+        resp.setData(data);
+            return ResponseEntity.status(HttpStatus.OK).body(resp);
+        
+            }else{
+          
+                resp.setOperation("Error");
+                resp.setMessage("Login Failed");
+                Map<String,String> data=new HashMap<String,String>();
+                data.put("token","Login Failed");
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+
+            }
+
+    }
+    
+
+
+
+
+
+
     public String EncryptePassword(String password){
         String md5Hex = DigestUtils.md5Hex(password);
          return md5Hex;
      }
-    
 }

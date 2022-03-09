@@ -1,6 +1,8 @@
 package com.gecobackend.backend.controller;
 
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.gecobackend.backend.model.User;
 import com.gecobackend.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +21,22 @@ public class UserController extends RuntimeException {
    public UserService userService;
    
 
-
-    @PostMapping(path="/user",consumes = "application/json",produces = "application/json") //PostApi
-    public ResponseEntity<?> createUser(@RequestBody User userDetails){ 
-        return userService.createUser(userDetails);
+     @PostMapping(path="/user",consumes = "application/json",produces = "application/json") //PostApi
+        public ResponseEntity<?> createUser(@RequestBody User userDetails,HttpServletRequest request){ 
+            return userService.createUser(userDetails,request);
         }
 
 
         @GetMapping(path="/validate/username",produces = "application/json")
-        public ResponseEntity<?> validate(@RequestParam String username)
-        {
-           
-return  userService.validateUser(username);
+        public ResponseEntity<?> validate(@RequestParam String username) {   
+            return  userService.validateUser(username);
         }
+
+        @PostMapping(path="/login")
+        public ResponseEntity<?> loginUser(@RequestBody User credentials) {
+
+            return userService.loginUser(credentials);
+        }
+        
+
     }
