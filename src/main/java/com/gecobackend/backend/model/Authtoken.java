@@ -1,6 +1,5 @@
 package com.gecobackend.backend.model;
 
-import java.util.Date;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -13,9 +12,9 @@ public class Authtoken {
     @Field
     private String username;
     @Field
-    private String token;
+    private String bridgeToken;
     @Field
-    private Date inserTime;
+    private long insertTime;
     @Field
     private int status;
     
@@ -25,17 +24,17 @@ public class Authtoken {
     public void setUsername(String username) {
         this.username = username;
     }
-    public String getToken() {
-        return token;
+    public String getBridgeToken() {
+        return bridgeToken;
     }
-    public void setToken(String token) {
-        this.token = token;
+    public void setBridgeToken(String token) {
+        this.bridgeToken = token;
     }
-    public Date getInserTime() {
-        return inserTime;
+    public long getinsertTime() {
+        return insertTime;
     }
-    public void setInserTime(Date inserTime) {
-        this.inserTime = inserTime;
+    public void setinsertTime(long insertTime) {
+        this.insertTime = insertTime;
     }
     public int getStatus() {
         return status;

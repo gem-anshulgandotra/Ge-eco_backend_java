@@ -1,6 +1,5 @@
 package com.gecobackend.backend.model;
 
-import java.util.Date;
 
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -31,12 +30,10 @@ public class User {
     public String company;
 
     @Field //for key
-    public Date insertTime;
-
-    
+    public long insertTime;
 
     @Field //for key
-    public Date updateTime;
+    public long updateTime;
     
     @Field //for key
     public String status;
@@ -45,10 +42,10 @@ public class User {
     public String companyType;
 
     @Field //for key
-    public Date verifiedTime;
+    public long verifiedTime;
 
     @Field //for key
-    public Date selfVerifiedTime;
+    public long selfVerifiedTime;
 
 
     public String getUsername() {
@@ -99,19 +96,19 @@ public class User {
         this.company = company;
     }
 
-    public Date getInsertTime() {
+    public long getInsertTime() {
         return this.insertTime;
     }
 
-    public void setInsertTime(Date insertTime) {
+    public void setInsertTime(long insertTime) {
         this.insertTime = insertTime;
     }
 
-    public Date getUpdateTime() {
+    public long getUpdateTime() {
         return this.updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(long updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -131,19 +128,19 @@ public class User {
         this.companyType = companyType;
     }
 
-    public Date getVerifiedTime() {
+    public long getVerifiedTime() {
         return this.verifiedTime;
     }
 
-    public void setVerifiedTime(Date verifiedTime) {
+    public void setVerifiedTime(long verifiedTime) {
         this.verifiedTime = verifiedTime;
     }
 
-    public Date getSelfVerifiedTime() {
+    public long getSelfVerifiedTime() {
         return this.selfVerifiedTime;
     }
 
-    public void setSelfVerifiedTime(Date selfVerifiedTime) {
+    public void setSelfVerifiedTime(long selfVerifiedTime) {
         this.selfVerifiedTime = selfVerifiedTime;
     }
     

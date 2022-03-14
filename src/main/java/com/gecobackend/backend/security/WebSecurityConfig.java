@@ -22,7 +22,7 @@ public class WebSecurityConfig {
         .antMatchers("/actuator/**").permitAll()
         .antMatchers("/user").permitAll()
         .antMatchers("/company").permitAll()
-        .antMatchers("/bridge/token/create").permitAll()
+        .antMatchers("/bridge/token/change").permitAll()
         .antMatchers("/company/create").permitAll()
         .antMatchers("/validate/username").permitAll()
         .antMatchers("/login").permitAll()

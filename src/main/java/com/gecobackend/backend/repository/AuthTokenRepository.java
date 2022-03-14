@@ -8,6 +8,5 @@ public interface AuthTokenRepository extends MongoRepository<Authtoken,String>{
     Authtoken findByUsernameAndStatus(String userNameFromJwtToken, int i);
 
 
-    void deleteAllByTokenAndStatus(String token, int i);
     
 }
