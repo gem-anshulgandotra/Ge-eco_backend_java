@@ -35,7 +35,6 @@ public class UserService {
 
 
     public ResponseEntity<?> createUser(User userDetails,HttpServletRequest request){
-        userDetails.setUsername(userDetails.getUsername().toLowerCase());
         Response resp=new Response();
        
         try{
@@ -45,10 +44,8 @@ public class UserService {
                 throw new CompulsaryFieldException();
             }
 
-    //  List<Company> li=companyRepository.findAll();
-    //    for(int i=0; i<li.size(); i++){
-    //        System.out.println(li.get(i).getCompanyName());
-    //    }
+            userDetails.setUsername(userDetails.getUsername().toLowerCase());
+
 
     Company company = companyRepository.findByCompanyName(userDetails.getCompany());
     if(company != null && company.getCompanyName().equals(userDetails.getCompany()) ){
@@ -59,13 +56,16 @@ public class UserService {
         userDetails.setCompanyType("New");
         Company newCompany = new Company();
         newCompany.setCompanyName(userDetails.getCompany());
-        newCompany.setInsertTime(new Date());
+        Date date = new Date();
+        long unixTime = date.getTime();
+        newCompany.setInsertTime(unixTime);
         newCompany.setCompanyType("User");
         companyRepository.save(newCompany);
         
     }
-
-        userDetails.setInsertTime(new Date());
+    Date date = new Date();
+    long unixTime = date.getTime();
+        userDetails.setInsertTime(unixTime);
         userDetails.setStatus("New");
         userDetails.setPassword(EncryptePassword(userDetails.getPassword()));
         userRepository.save(userDetails);
@@ -73,7 +73,7 @@ public class UserService {
         resp.setMessage("User created successfully");
         String token=authTokenService.postBridgeToken(userDetails.getUsername());
 Map<String,String> data=new HashMap<String,String>();
-data.put("token",token);
+data.put("bridgeToken",token);
         // resp.setData(userDetails);
         resp.setData(data);
         return ResponseEntity.status(HttpStatus.CREATED).body(resp);
@@ -91,12 +91,11 @@ data.put("token",token);
             resp.setOperation("Error");
             resp.setMessage("Username already exists");
             resp.setData(null); 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resp);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(resp);
         }
        
         catch (Exception e){
             
-            System.out.println(e);
             resp.setOperation("Error");
             resp.setMessage("Something Went Wrong!");
             resp.setData(null); 
@@ -111,7 +110,6 @@ data.put("token",token);
 
 Response resp=new Response();
 try{
-System.out.println(userRepository.findByUsername(username).getUsername() + " "+ username);
         if(userRepository.findByUsername(username).getUsername().equals(username)){
             Map<String,Boolean> data=new HashMap<String,Boolean>();
             data.put("isPresent",userRepository.findByUsername(username).getUsername().equals(username));
@@ -139,7 +137,7 @@ resp.setOperation("Success");
     public ResponseEntity<?> loginUser(User credentials) {
         Response resp=new Response();
      String pass=EncryptePassword(credentials.getPassword());
-     String username=credentials.getUsername();
+     String username=credentials.getUsername().toLowerCase();
 
      if(userRepository.findByUsernameAndPassword(username, pass)!=null){
         resp.setOperation("Success");

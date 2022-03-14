@@ -3,7 +3,6 @@ package com.gecobackend.backend.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import com.gecobackend.backend.entity.Response;
 import com.gecobackend.backend.model.Company;
 import com.gecobackend.backend.repository.CompanyRepository;
@@ -20,13 +19,17 @@ public class CompanyService {
     private CompanyRepository companyRepository;
 
     public ResponseEntity<?> createCompany(Company company) {
-        company.setInsertTime(new Date());
+        Date date = new Date();
+        long unixTime = date.getTime();
+        company.setInsertTime(unixTime);
         companyRepository.save(company);
         return ResponseEntity.ok("Company Registered");
 
     }
 
     public ResponseEntity<?> getAllCompany() {
+
+    
 
         Response resp=new Response();
         List<Company> companyList= companyRepository.findAll();

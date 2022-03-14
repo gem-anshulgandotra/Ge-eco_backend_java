@@ -1,6 +1,5 @@
 package com.gecobackend.backend.model;
 
-import java.util.Date;
 
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,7 +16,7 @@ public class Company {
     public String companyType="System";
 
     @Field
-    public Date insertTime;
+    public long insertTime;
 
     public String getCompanyName() {
         return this.companyName;
@@ -35,11 +34,11 @@ public class Company {
         this.companyType = companyType;
     }
 
-    public Date getInsertTime() {
+    public long getInsertTime() {
         return this.insertTime;
     }
 
-    public void setInsertTime(Date insertTime) {
+    public void setInsertTime(long insertTime) {
         this.insertTime = insertTime;
     }
 
