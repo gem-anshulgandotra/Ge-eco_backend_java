@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CompanyService {
     
-    @Autowired
+    @Autowired // Alternative for cinding using constructor
     private CompanyRepository companyRepository;
 
     public ResponseEntity<?> createCompany(Company company) {

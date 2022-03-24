@@ -6,8 +6,6 @@ import com.gecobackend.backend.entity.Response;
 import com.gecobackend.backend.model.Introduction;
 import com.gecobackend.backend.repository.IntroductionRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.config.RepositoryNameSpaceHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -45,7 +43,7 @@ public class IntroductionService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resp);
         }
         else{
-            resp.setMessage(" Introduction details fetched successfully");
+            resp.setMessage("Introduction details fetched successfully");
             resp.setOperation("Success");
             return ResponseEntity.status(HttpStatus.OK).body(resp);
         }
