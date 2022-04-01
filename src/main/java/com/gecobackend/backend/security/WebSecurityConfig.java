@@ -27,6 +27,7 @@ public class WebSecurityConfig {
         .antMatchers("/validate/username").permitAll()
         .antMatchers("/login").permitAll()
         .antMatchers("/intro").permitAll()
+        .antMatchers("/base").permitAll()
         .anyRequest().authenticated()
         .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

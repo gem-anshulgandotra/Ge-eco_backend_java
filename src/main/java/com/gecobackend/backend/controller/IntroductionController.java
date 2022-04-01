@@ -24,11 +24,6 @@ public class IntroductionController {
         this.introService = introService;
     }
 
-    // @GetMapping(path = "/intro", produces = "application/json")
-    // public ResponseEntity<?> getIntro(){
-    //     return introService.introDetails();
-    // }
-
     @GetMapping(path = "/intro", produces = "application/json")
     public ResponseEntity<?> getGemIntro(@RequestParam(name = "gem",defaultValue = "") String gemName){
         if(gemName.isEmpty()){
